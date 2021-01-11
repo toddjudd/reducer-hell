@@ -62,7 +62,7 @@ function App() {
         <h1>CHECKBOXES</h1>
         {state.checks.map((check) => {
           return (
-            <label htmlFor={check.id}>
+            <label htmlFor={check.id} key={check.id}>
               {check.id}:
               <input
                 type='checkbox'
