@@ -8,11 +8,9 @@ function App() {
       case 'SELECT_CHECK': {
         return {
           checks: state.checks.map((check, i) => {
-            console.log({ action, check, i });
             if (action.id === check.id) {
-              check.selected = !check.selected;
+              check.selected = action.checked;
             }
-            console.log({ action, check, i });
             return check;
           }),
           allChecked: state.checks.reduce((acc, check) => {
@@ -68,7 +66,9 @@ function App() {
                 type='checkbox'
                 checked={check.selected}
                 onChange={(e) => {
-                  dispatch({ type: 'SELECT_CHECK', id: check.id });
+                  console.log(e.target.checked);
+
+                  dispatch({ type: 'SELECT_CHECK', id: check.id, checked: e.target.checked });
                 }}
               />
             </label>
