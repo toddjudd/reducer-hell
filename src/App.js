@@ -70,6 +70,7 @@ function App() {
           </label>
         );
       })}
+      <pre>{JSON.stringify(state)}</pre>
     </div>
   );
 }
