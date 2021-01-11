@@ -1,4 +1,5 @@
 import { useReducer } from 'react';
+import ReactJson from 'react-json-view';
 import './App.css';
 
 function App() {
@@ -7,9 +8,11 @@ function App() {
       case 'SELECT_CHECK': {
         return {
           checks: state.checks.map((check, i) => {
+            console.log({ action, check, i });
             if (action.id === check.id) {
               check.selected = !check.selected;
             }
+            console.log({ action, check, i });
             return check;
           }),
           allChecked: state.checks.reduce((acc, check) => {
@@ -44,34 +47,36 @@ function App() {
 
   const [state, dispatch] = useReducer(reducer, init);
   return (
-    <div className='App'>
-      <label htmlFor='selectAll'>
-        Select All:
-        <input
-          type='checkbox'
-          checked={state.allChecked}
-          onChange={(e) => {
-            dispatch({ type: 'SELECT_ALL' });
-          }}
-        />
-      </label>
-      <h1>CHECKBOXES</h1>
-      {state.checks.map((check) => {
-        return (
-          <label htmlFor={check.id}>
-            {check.id}:
-            <input
-              type='checkbox'
-              checked={check.selected}
-              onChange={(e) => {
-                dispatch({ type: 'SELECT_CHECK', id: check.id });
-              }}
-            />
-          </label>
-        );
-      })}
-      <pre>{JSON.stringify(state)}</pre>
-    </div>
+    <>
+      <div className='App'>
+        <label htmlFor='selectAll'>
+          Select All:
+          <input
+            type='checkbox'
+            checked={state.allChecked}
+            onChange={(e) => {
+              dispatch({ type: 'SELECT_ALL' });
+            }}
+          />
+        </label>
+        <h1>CHECKBOXES</h1>
+        {state.checks.map((check) => {
+          return (
+            <label htmlFor={check.id}>
+              {check.id}:
+              <input
+                type='checkbox'
+                checked={check.selected}
+                onChange={(e) => {
+                  dispatch({ type: 'SELECT_CHECK', id: check.id });
+                }}
+              />
+            </label>
+          );
+        })}
+      </div>
+      <ReactJson src={state} theme='monokai' />
+    </>
   );
 }
 
