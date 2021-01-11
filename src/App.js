@@ -11,7 +11,6 @@ function App() {
             if (action.id === check.id) {
               check.selected = action.checked;
             }
-            console.log(check);
             return check;
           }),
           allChecked: state.checks.reduce((acc, check) => {
