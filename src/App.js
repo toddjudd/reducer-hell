@@ -11,6 +11,7 @@ function App() {
             if (action.id === check.id) {
               check.selected = action.checked;
             }
+            console.log(check);
             return check;
           }),
           allChecked: state.checks.reduce((acc, check) => {
@@ -66,8 +67,6 @@ function App() {
                 type='checkbox'
                 checked={check.selected}
                 onChange={(e) => {
-                  console.log(e.target.checked);
-
                   dispatch({ type: 'SELECT_CHECK', id: check.id, checked: e.target.checked });
                 }}
               />
