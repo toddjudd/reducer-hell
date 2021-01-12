@@ -6,25 +6,22 @@ function App() {
   const reducer = (state, action) => {
     switch (action.type) {
       case 'SELECT_CHECK': {
+        let checks = state.checks.map((check, i) =>
+          action.id === check.id ? { ...check, selected: !check.selected } : check
+        );
+        let allChecked = checks.reduce((acc, check) => {
+          if (!acc) return false;
+          return check.selected;
+        }, true);
         return {
-          checks: state.checks.map((check, i) => {
-            if (action.id === check.id) {
-              check.selected = action.checked;
-            }
-            return check;
-          }),
-          allChecked: state.checks.reduce((acc, check) => {
-            if (!acc) return false;
-            return check.selected;
-          }, true),
+          checks,
+          allChecked,
         };
       }
       case 'SELECT_ALL': {
+        let checks = state.checks.map((check) => ({ ...check, selected: !state.allChecked }));
         return {
-          checks: state.checks.map((check) => {
-            check.selected = !state.allChecked;
-            return check;
-          }),
+          checks,
           allChecked: !state.allChecked,
         };
       }
@@ -66,7 +63,7 @@ function App() {
                 type='checkbox'
                 checked={check.selected}
                 onChange={(e) => {
-                  dispatch({ type: 'SELECT_CHECK', id: check.id, checked: e.target.checked });
+                  dispatch({ type: 'SELECT_CHECK', id: check.id });
                 }}
               />
             </label>
